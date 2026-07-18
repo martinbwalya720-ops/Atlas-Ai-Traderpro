@@ -1,0 +1,31 @@
+# Environment / secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+
+# Bot persisted data
+data/*.json
+!data/.gitkeep
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Distribution
+build/
+dist/
+*.egg
