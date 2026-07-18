@@ -358,9 +358,10 @@ async def _show_live_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer()
     settings = storage.get_settings(update.effective_user.id)
     subscribed = settings.get("live_signals", False)
+    status_text = "Subscribed \u2705" if subscribed else "Not subscribed"
     text = (
         "*\U0001F4E1 Live Signals*\n\n"
-        f"Status: {'Subscribed \u2705' if subscribed else 'Not subscribed'}\n"
+        f"Status: {status_text}\n"
         f"When subscribed, you'll receive automatic scans roughly every "
         f"{config.LIVE_SIGNAL_INTERVAL_SECONDS // 60} minutes."
     )
