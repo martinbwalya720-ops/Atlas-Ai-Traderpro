@@ -1,3 +1,4 @@
+
 """
 Atlas AI Trader PRO - Configuration
 Central place for symbols, timeframes, and app-wide constants.
@@ -103,6 +104,40 @@ DERIV_SYMBOL_MAP = {
     "ETH/USD": ("cryETHUSD", "crypto"),
 }
 
+# Synthetic indices - these exist only on Deriv (no Yahoo Finance data), so
+# the display name IS the symbol used everywhere (no separate ticker).
+# They trade 24/7, including weekends.
+SYNTHETIC_SYMBOLS = {
+    "Volatility 10 Index": "R_10",
+    "Volatility 25 Index": "R_25",
+    "Volatility 50 Index": "R_50",
+    "Volatility 75 Index": "R_75",
+    "Volatility 100 Index": "R_100",
+    "Boom 500 Index": "BOOM500",
+    "Boom 1000 Index": "BOOM1000",
+    "Crash 500 Index": "CRASH500",
+    "Crash 1000 Index": "CRASH1000",
+    "Step Index": "STPRNG",
+}
+DERIV_SYMBOL_MAP.update({name: (code, "synthetic") for name, code in SYNTHETIC_SYMBOLS.items()})
+
+# Candle granularity (seconds) used when pulling synthetic index history
+# directly from Deriv, matched to our existing timeframe options.
+SYNTHETIC_GRANULARITY = {
+    "15m": 900,
+    "1h": 3600,
+    "1d": 86400,
+}
+
+# A small curated subset included in Scan Markets / Live Signals, kept short
+# since each one requires its own Deriv API round-trip (unlike the batched
+# yfinance calls used for forex/gold/crypto).
+SCAN_SYNTHETICS = {
+    "Volatility 75 Index": "R_75",
+    "Boom 1000 Index": "BOOM1000",
+    "Crash 1000 Index": "CRASH1000",
+}
+
 # Conservative leverage per category. Deriv enforces its own max per symbol -
 # if a value here exceeds what's allowed, Deriv's API returns a clear error
 # that the bot will show you, so you know to lower it here.
@@ -110,8 +145,10 @@ DERIV_MULTIPLIER = {
     "forex": 50,
     "gold": 20,
     "crypto": 5,
+    "synthetic": 20,
     "default": 20,
 }
+
 
 STAKE_OPTIONS = [1, 5, 10, 20]
 DEFAULT_STAKE = 1
