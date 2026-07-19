@@ -80,3 +80,38 @@ DISCLAIMER = (
     "technical indicators (SMA/RSI) and are *not* financial advice. Always "
     "do your own research and manage your risk."
 )
+
+# ---------------------------------------------------------------------------
+# Deriv trading (optional - powers the "Place Demo Trade" approval flow)
+# ---------------------------------------------------------------------------
+DERIV_API_TOKEN = os.environ.get("DERIV_API_TOKEN", "")
+DERIV_APP_ID = os.environ.get("DERIV_APP_ID", "1089")
+DERIV_WS_URL = "wss://ws.derivws.com/websockets/v3?app_id={app_id}"
+
+# Our display name -> (Deriv underlying symbol code, category)
+DERIV_SYMBOL_MAP = {
+    "EUR/USD": ("frxEURUSD", "forex"),
+    "GBP/USD": ("frxGBPUSD", "forex"),
+    "USD/JPY": ("frxUSDJPY", "forex"),
+    "USD/CHF": ("frxUSDCHF", "forex"),
+    "AUD/USD": ("frxAUDUSD", "forex"),
+    "USD/CAD": ("frxUSDCAD", "forex"),
+    "NZD/USD": ("frxNZDUSD", "forex"),
+    "EUR/GBP": ("frxEURGBP", "forex"),
+    "Gold Spot (XAU/USD)": ("frxXAUUSD", "gold"),
+    "BTC/USD": ("cryBTCUSD", "crypto"),
+    "ETH/USD": ("cryETHUSD", "crypto"),
+}
+
+# Conservative leverage per category. Deriv enforces its own max per symbol -
+# if a value here exceeds what's allowed, Deriv's API returns a clear error
+# that the bot will show you, so you know to lower it here.
+DERIV_MULTIPLIER = {
+    "forex": 50,
+    "gold": 20,
+    "crypto": 5,
+    "default": 20,
+}
+
+STAKE_OPTIONS = [1, 5, 10, 20]
+DEFAULT_STAKE = 1
