@@ -10,7 +10,7 @@ import os
 import threading
 from datetime import datetime, timezone
 
-from config import DATA_DIR, USER_DATA_FILE, DEFAULT_RISK, DEFAULT_TIMEFRAME
+from config import DATA_DIR, USER_DATA_FILE, DEFAULT_RISK, DEFAULT_TIMEFRAME, DEFAULT_STAKE
 
 _lock = threading.Lock()
 
@@ -47,6 +47,7 @@ def _default_user() -> dict:
             "risk": DEFAULT_RISK,
             "timeframe": DEFAULT_TIMEFRAME,
             "live_signals": False,
+            "stake": DEFAULT_STAKE,
         },
     }
 
